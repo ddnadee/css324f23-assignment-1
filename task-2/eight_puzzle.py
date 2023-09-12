@@ -11,16 +11,16 @@ def is_goal(s):
 
 def successors(s):
     _, r, c = s
-    new_r, new_c = r-1, c
+    new_r, new_c = r-1, c #move up
     if is_valid(new_r, new_c):
         yield move_blank(s, new_r, new_c), 1
-    new_r, new_c = r+1, c
+    new_r, new_c = r+1, c #move down
     if is_valid(new_r, new_c):
         yield move_blank(s, new_r, new_c), 1
-    new_r, new_c = r, c-1
+    new_r, new_c = r, c-1 #move left
     if is_valid(new_r, new_c):
         yield move_blank(s, new_r, new_c), 1
-    new_r, new_c = r, c+1
+    new_r, new_c = r, c+1 #move right
     if is_valid(new_r, new_c):
         yield move_blank(s, new_r, new_c), 1
 
@@ -51,4 +51,23 @@ def h1(s):
 def h3(s):
     # implement this function
     board, _, _ = s
-    return 0
+    res = 0
+
+    #check row
+    for idx, tile in enumerate(board):
+        if tile > 0:
+            goal_row = (tile - 1) // 3
+            current_row = idx // 3
+            if current_row != goal_row:
+                res += 1
+
+    #check column
+    for idx, tile in enumerate(board):
+        if tile > 0:
+            goal_col = (tile - 1) % 3
+            current_col = idx % 3
+            if goal_col != current_col:
+                res += 1
+
+    
+    return res
